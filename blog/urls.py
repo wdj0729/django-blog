@@ -1,6 +1,7 @@
 from django.urls import path
 from django.conf.urls import url
 from . import views
+from django.views.generic.base import TemplateView
 
 urlpatterns = [
     path('', views.post_list, name='post_list'),
@@ -13,4 +14,5 @@ urlpatterns = [
     url(r'^post/(?P<pk>\d+)/comment/$', views.add_comment_to_post, name='add_comment_to_post'),
     url(r'^comment/(?P<pk>\d+)/approve/$', views.comment_approve, name='comment_approve'),
     url(r'^comment/(?P<pk>\d+)/remove/$', views.comment_remove, name='comment_remove'),
+    url('jsgrid/',TemplateView.as_view(template_name='jsgrid.html')),
 ]
