@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 애플리케이션 등록
     'blog',
 ]
 
@@ -54,7 +55,10 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        # 템플릿을 찾을 위치 구성
+        'DIRS': [
+            os.path.join(BASE_DIR,'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -4,9 +4,13 @@ from django.utils import timezone
 # pylint: disable=E1101
 
 class Post(models.Model):
+    # 다른 테이터베이스 모델과 일대 다 관계를 지정
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
+    # 중간에서 중간 크기의 고정 길이 문자열 정의
+    title = models.CharField(max_length=50, help_text='Enter the title')
+    # 임의 길이의 큰 문자열
     text = models.TextField()
+    # 날짜 및 날짜/시간 정보를 저장/표시
     created_date = models.DateTimeField(
             default=timezone.now)
     published_date = models.DateTimeField(

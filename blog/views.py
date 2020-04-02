@@ -1,15 +1,23 @@
+import math
+
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from .models import Post, Comment
 from .forms import PostForm, CommentForm
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 # pylint: disable=E1101
 
 # Create your views here.
 def post_list(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
-    return render(request, 'blog/post_list.html',{'posts':posts})
+    # 데이터 쿼리하기
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date').reverse()
+    # Pagination
+    paginator = Paginator(posts, 2)
+    page = request.GET.get('page')
+    pageposts = paginator.get_page(page)
+    return render(request, 'blog/post_list.html',{ 'posts':posts,'pageposts':pageposts })
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
