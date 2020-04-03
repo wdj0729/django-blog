@@ -1,6 +1,7 @@
 from django.urls import path, re_path
 from . import views
 from django.views.generic.base import TemplateView
+from django.conf.urls import include
 
 # django 2.0 버전부터는 url 대신 path, re_path(정규식)만 사용
 urlpatterns = [
@@ -17,4 +18,6 @@ urlpatterns = [
     re_path(r'^comment/(?P<pk>\d+)/approve/$', views.comment_approve, name='comment_approve'),
     re_path(r'^comment/(?P<pk>\d+)/remove/$', views.comment_remove, name='comment_remove'),
     path('jsgrid/',TemplateView.as_view(template_name='jsgrid.html')),
+    # Add Django site authentication urls (for login, logout, password management)
+    path('/accounts/', include('django.contrib.auth.urls')),
 ]

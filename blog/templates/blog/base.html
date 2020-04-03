@@ -42,20 +42,6 @@
             </div>
         </div>
     </div>
-    <!--페이지네이션 구현-->
-    <div class="container">
-        {% if pageposts.has_previous %} 
-        <a href="?page={{pageposts.previous_page_number}}">Previous</a>
-        {% endif %}
-    
-        <span>{{pageposts.number}}</span>
-        <span>of</span> 
-        <span>{{pageposts.paginator.num_pages}}</span> 
-    
-        {% if pageposts.has_next %} 
-        <a href="?page={{pageposts.next_page_number}}">Next</a> 
-        {%endif%} 
-    </div>
     <script>
         $(function () {
 

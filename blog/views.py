@@ -1,10 +1,9 @@
 import math
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import Post, Comment
 from .forms import PostForm, CommentForm
-from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 # pylint: disable=E1101
@@ -17,7 +16,10 @@ def post_list(request):
     paginator = Paginator(posts, 2)
     page = request.GET.get('page')
     pageposts = paginator.get_page(page)
-    return render(request, 'blog/post_list.html',{ 'posts':posts,'pageposts':pageposts })
+    # 세션, 페이지 방문 수
+    num_visits = request.session.get('num_visits',0)
+    request.session['num_visits'] = num_visits + 1
+    return render(request, 'blog/post_list.html',{ 'posts':posts, 'pageposts':pageposts, 'num_visits': num_visits})
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
