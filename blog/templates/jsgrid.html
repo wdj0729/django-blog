@@ -11,11 +11,24 @@
     <link type="text/css" rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+    <style>
+        .bg-red td {
+            background-color: #f08080 !important;
+        }
+
+        .bg-green td {
+            background-color: #90ee90 !important;
+        }
+    </style>
 </head>
 
 <body>
     <h1>Hello World!</h1>
     <div id="jsGrid"></div>
+    <input type="text" value="some text">
+    <div id="myDiv">
+        <p></p>
+    </div>
     <script>
         $(function () {
             var clients = [
@@ -45,8 +58,16 @@
                 autoload: true,
                 pageSize: 5,
 
-                invalidNotify: function(args){
-                    var messages = $.map(args.errors, function(error){
+                rowClass: function (item, itemIndex) {
+                    return itemIndex%2 == 0 ? 'bg-red' : 'bg-green';
+                },
+
+                rowClick: function(){
+                    
+                },
+
+                invalidNotify: function (args) {
+                    var messages = $.map(args.errors, function (error) {
                         return error.field + ": " + error.message;
                     });
 
@@ -56,7 +77,7 @@
                 data: clients,
 
                 fields: [
-                    { name: "Name", type: "text", width: 150, validate: "required"},
+                    { name: "Name", type: "text", width: 150, validate: "required" },
                     { name: "Age", type: "number", width: 50 },
                     { name: "Address", type: "text", width: 200 },
                     { name: "Country", type: "select", items: countries, valueField: "Id", textField: "Name" },
@@ -65,6 +86,15 @@
                 ]
             });
         });
+
+        $("input")
+            .keyup(function () {
+                var value = $(this).val();
+                $("p").text(value);
+            })
+            .keyup();
+
+        $("#myDiv").css("border", "3px solid red");
     </script>
 
 

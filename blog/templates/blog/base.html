@@ -1,105 +1,118 @@
 {% load static %}
 <html>
-    <head>
-        <title>Django Girls blog</title>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css">
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.js" integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI=" crossorigin="anonymous"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
-    </head>
-    <body>
-        <div class="page-header">
-            {% if user.is_authenticated %}
-                <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
-                <a href="{% url 'post_draft_list' %}" class="top-menu"><span class="glyphicon glyphicon-edit"></span></a>
-                <p class="top-menu">Hello {{ user.username }} <small>(<a href="{% url 'logout' %}">Log out</a>)</small></p>
-            {% else %}
-                <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
-            {% endif %}
-            <h1><a href="/">Django Girls Blog</a></h1>
-        </div>
-        <div class="content container">
-            <div class="row">
-                <div class="col-md-8">
+
+<head>
+    <title>Django Girls blog</title>
+    <!--bootstrap cdn-->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <!--googleapi css-->
+    <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <!--css-->
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <!--jsgrid cdn-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+    <!--jquery cdn-->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.js"
+        integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="page-header">
+        <!--조건부 실행-->
+        {% if user.is_authenticated %}
+        <!--URL에 연결-->
+        <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+        <a href="{% url 'post_draft_list' %}" class="top-menu"><span class="glyphicon glyphicon-edit"></span></a>
+        <!--인덱스 템플릿-->
+        <p class="top-menu">Hello {{ user.username }} <small>(<a href="{% url 'logout' %}">Log out</a>)</small></p>
+        {% else %}
+        <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
+        {% endif %}
+        <h1><a href="/">Django Girls Blog</a></h1>
+    </div>
+    <div class="content container">
+        <div class="row">
+            <div class="col-md-8">
+                <!--템플릿 확장-->
                 {% block content %}
                 {% endblock %}
-                </div>
             </div>
         </div>
-        <script>
-            $(function() {
-    
-                $("#jsGrid").jsGrid({
-                    height: "50%",
-                    width: "100%",
-    
-                    filtering: true,
-                    inserting: true,
-                    editing: true,
-                    sorting: true,
-                    paging: true,
-                    autoload: true,
-    
-                    pageSize: 10,
-                    pageButtonCount: 5,
-    
-                    deleteConfirm: "Do you really want to delete client?",
-    
-                    controller: {
-                        loadData: function(filter) {
-                            var d = $.Deferred();
-    
-                            $.ajax({
-                                type: "GET",
-                                url: "/clients/api",
-                                data: filter
-                            }).done(function(result) {
-                                d.resolve($.map(result, function(item) {
-                                    return $.extend(item.fields, { id: item.pk });
-                                }));
-                            });
-    
-                            return d.promise();
-                        },
-    
-                        insertItem: function(item) {
-                            return $.ajax({
-                                type: "POST",
-                                url: "/clients/api",
-                                data: item
-                            });
-                        },
-    
-                        updateItem: function(item) {
-                            return $.ajax({
-                                type: "PUT",
-                                url: "/clients/api/" + item.id,
-                                data: item
-                            });
-                        },
-    
-                        deleteItem: function(item) {
-                            return $.ajax({
-                                type: "DELETE",
-                                url: "/clients/api/" + item.id
-                            });
-                        }
+    </div>
+    <script>
+        $(function () {
+
+            $("#jsGrid").jsGrid({
+                height: "50%",
+                width: "100%",
+
+                filtering: true,
+                inserting: true,
+                editing: true,
+                sorting: true,
+                paging: true,
+                autoload: true,
+
+                pageSize: 10,
+                pageButtonCount: 5,
+
+                deleteConfirm: "Do you really want to delete client?",
+
+                controller: {
+                    loadData: function (filter) {
+                        var d = $.Deferred();
+
+                        $.ajax({
+                            type: "GET",
+                            url: "/clients/api",
+                            data: filter
+                        }).done(function (result) {
+                            d.resolve($.map(result, function (item) {
+                                return $.extend(item.fields, { id: item.pk });
+                            }));
+                        });
+
+                        return d.promise();
                     },
-    
-                    fields: [
-                        { name: "name", type: "text", width: 150 },
-                        { name: "age", type: "number", width: 50, filtering: false },
-                        { name: "address", type: "text", width: 200 },
-                        { name: "married", type: "checkbox", title: "Is Married", filtering: false, sorting: false },
-                        { type: "control" }
-                    ]
-                });
-    
+
+                    insertItem: function (item) {
+                        return $.ajax({
+                            type: "POST",
+                            url: "/clients/api",
+                            data: item
+                        });
+                    },
+
+                    updateItem: function (item) {
+                        return $.ajax({
+                            type: "PUT",
+                            url: "/clients/api/" + item.id,
+                            data: item
+                        });
+                    },
+
+                    deleteItem: function (item) {
+                        return $.ajax({
+                            type: "DELETE",
+                            url: "/clients/api/" + item.id
+                        });
+                    }
+                },
+
+                fields: [
+                    { name: "name", type: "text", width: 150 },
+                    { name: "age", type: "number", width: 50, filtering: false },
+                    { name: "address", type: "text", width: 200 },
+                    { name: "married", type: "checkbox", title: "Is Married", filtering: false, sorting: false },
+                    { type: "control" }
+                ]
             });
-        </script>
-    </body>
+
+        });
+    </script>
+</body>
+
 </html>
