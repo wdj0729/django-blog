@@ -48,3 +48,17 @@ h1, h2, h3, h4 {
 .comment {
     margin: 20px 0px 20px 20px;
 }
+
+.page-footer{
+    position: absolute;
+    background-color: skyblue;
+    font-family: 'Lobster', cursive;
+    bottom:0;
+    width:100%;
+    height:100px;
+}
+
+.page-footer p{
+    padding-top: 2.5%;
+    text-align: center;
+}

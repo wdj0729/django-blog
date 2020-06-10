@@ -18,6 +18,7 @@ urlpatterns = [
     re_path(r'^comment/(?P<pk>\d+)/approve/$', views.comment_approve, name='comment_approve'),
     re_path(r'^comment/(?P<pk>\d+)/remove/$', views.comment_remove, name='comment_remove'),
     path('jsgrid/',TemplateView.as_view(template_name='jsgrid.html')),
+    path('test/',TemplateView.as_view(template_name='test.html')),
     # Add Django site authentication urls (for login, logout, password management)
     path('/accounts/', include('django.contrib.auth.urls')),
 ]

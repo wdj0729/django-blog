@@ -1,0 +1,15 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <!--Fields-->
+    <p>user: {{user}}</p>
+    <p>password: {{user.password}}</p>
+    <p>is_staff: {{user.is_staff}}</p>
+    <p>is_active : {{user.is_active}}</p>
+    <p>is_superuser: {{user.is_superuser}}</p>
+    <p>last_login: {{user.last_login}}</p>
+    <p>date_joined: {{user.date_joined}}</p>
+    <!--Atrributes-->
+    <p>is_authenticated: {{user.is_authenticated}}</p>
+    <p>is_anonymous: {{user.is_anonymous}}</p>
+{% endblock %}
